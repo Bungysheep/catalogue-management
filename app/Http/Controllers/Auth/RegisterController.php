@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -42,6 +42,18 @@ class RegisterController extends Controller
     }
 
     /**
+     * The user has been registered.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User
+     * @return mixed
+     */
+    protected function registered(Request $request, User $user)
+    {
+        return response()->json(['data' => $user->toArray()], 201);
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -67,7 +79,7 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => bcrypt($data['password']),
         ]);
     }
 }
