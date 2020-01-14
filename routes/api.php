@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('register', 'Auth\RegisterController@register');
+
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::resource('/catalogues', 'Catalogue\CatalogueController')->only(['index', 'show', 'store', 'update', 'destroy']);
+});
