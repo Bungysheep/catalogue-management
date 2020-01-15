@@ -14,11 +14,13 @@ class CreateCataloguesTable extends Migration
     public function up()
     {
         Schema::create('catalogues', function (Blueprint $table) {
-            $table->string('catalogue_code');
-            $table->string('description');
-            $table->string('details');
-            $table->string('status')->default('A');
+            $table->string('catalogue_code', 16);
+            $table->string('description', 32);
+            $table->string('details', 255);
+            $table->string('status', 1)->default('A');
             $table->timestamps();
+
+            $table->primary(['catalogue_code']);
         });
     }
 
