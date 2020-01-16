@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
+use App\User;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -13,6 +14,10 @@ abstract class TestCase extends BaseTestCase
     public function setUp() :void
     {
         parent::setUp();
-        Artisan::call('db:seed', [ '--class' => 'UsersTableSeeder' ]);
+        Artisan::call('passport:install', [ '-vvv' => true ]);
+        Artisan::call('db:seed', [ '-vvv' => true ]);
+
+        $user = factory(User::class)->create();
+        $this->access_token = $user->createToken('catalogue-management-oauth')->accessToken;
     }
 }

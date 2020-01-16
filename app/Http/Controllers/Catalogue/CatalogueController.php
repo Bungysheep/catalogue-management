@@ -21,6 +21,13 @@ class CatalogueController extends Controller
     {
         $catalogue = Catalogue::find($id);
 
+        if (is_null($catalogue)) {
+            return response()->json([
+                'success' => 'false',
+                'message' => 'Catalogue does not exist.'
+            ], 404);
+        }
+
         return (new CatalogueResource($catalogue))->response()->setStatusCode(200);
     }
 
