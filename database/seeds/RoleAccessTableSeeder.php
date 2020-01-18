@@ -13,14 +13,19 @@ class RoleAccessTableSeeder extends Seeder
     public function run()
     {
         RoleAccess::create([
+            'role_code' => 'ADMIN',
             'entity_key' => 'CATALOGUE',
-            'description' => 'Catalogue',
-            'default_access' => [
+            'override_access' => [
                 'read' => true,
-                'create' => false,
-                'update' => false,
-                'delete' => false
+                'create' => true,
+                'update' => true,
+                'delete' => true
             ]
+        ]);
+
+        RoleAccess::create([
+            'role_code' => 'OFFICER',
+            'entity_key' => 'CATALOGUE'
         ]);
     }
 }

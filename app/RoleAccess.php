@@ -12,16 +12,13 @@ class RoleAccess extends Model
 
     protected $table = 'role_access';
 
-    protected $primaryKey = 'entity_key';
-
-    protected $keyType = 'string';
-
     protected $fillable = [
-        'entity_key', 'description', 'default_access'
+        'role_code', 'entity_key', 'override_access'
     ];
 
     protected $casts = [
+        'role_code' => 'string',
         'entity_key' => 'string',
-        'default_access' => 'array'
+        'override_access' => 'array'
     ];
 }
