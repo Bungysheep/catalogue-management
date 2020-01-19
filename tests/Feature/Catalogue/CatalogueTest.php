@@ -48,6 +48,86 @@ class CatalogueTest extends TestCase
             ->assertStatus(401);
     }
 
+    public function testGetAllCataloguesWithoutAuthAccess()
+    {
+        $header = [
+            'Authorization' => "Bearer $this->officer_access_token",
+        ];
+        $payload = [];
+        $this->json('get', '/api/catalogues', $payload, $header)
+            ->assertStatus(403)
+            ->assertJson([
+                'success' => 'false',
+                'message' => 'You do not have access to retrieve Catalogues.'
+            ]);
+    }
+
+    public function testGetCatalogueWithoutAuthAccess()
+    {
+        $header = [
+            'Authorization' => "Bearer $this->officer_access_token",
+        ];
+        $payload = [];
+        $this->json('get', '/api/catalogues/$DEFAULT', $payload, $header)
+            ->assertStatus(403)
+            ->assertJson([
+                'success' => 'false',
+                'message' => 'You do not have access to retrieve a Catalogue.'
+            ]);
+    }
+
+    public function testCreateCatalogueWithoutAuthAccess()
+    {
+        $header = [
+            'Authorization' => "Bearer $this->officer_access_token",
+        ];
+        $payload = [
+            'catalogue_code' => 'CLG',
+            'description' => 'My Catalogue',
+            'details' => 'My Catalogue',
+            'status' => 'A',
+        ];
+        $this->json('post', '/api/catalogues', $payload, $header)
+            ->assertStatus(403)
+            ->assertJson([
+                'success' => 'false',
+                'message' => 'You do not have access to create a Catalogue.'
+            ]);
+    }
+
+    public function testUpdateCatalogueWithoutAuthAccess()
+    {
+        $header = [
+            'Authorization' => "Bearer $this->officer_access_token",
+        ];
+        $payload = [
+            'catalogue_code' => '$DEFAULT',
+            'description' => 'My Catalogue',
+            'details' => 'My Catalogue',
+            'status' => 'A',
+        ];
+        $this->json('put', '/api/catalogues/$DEFAULT', $payload, $header)
+            ->assertStatus(403)
+            ->assertJson([
+                'success' => 'false',
+                'message' => 'You do not have access to update a Catalogue.'
+            ]);
+    }
+
+    public function testDeleteCatalogueWithoutAuthAccess()
+    {
+        $header = [
+            'Authorization' => "Bearer $this->officer_access_token",
+        ];
+        $payload = [];
+        $this->json('delete', '/api/catalogues/$DEFAULT', $payload, $header)
+            ->assertStatus(403)
+            ->assertJson([
+                'success' => 'false',
+                'message' => 'You do not have access to delete a Catalogue.'
+            ]);
+    }
+
     public function testGetAllCatalogues()
     {
         $header = [
@@ -296,6 +376,10 @@ class CatalogueTest extends TestCase
         ];
         $payload = [];
         $this->json('delete', '/api/catalogues/$DEFAULT', $payload, $header)
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertJson([
+                'success' => 'true',
+                'message' => 'Catalogue was deleted.'
+            ]);
     }
 }
