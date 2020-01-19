@@ -14,12 +14,16 @@ class CatalogueController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAny', Catalogue::class);
+
         return (new CatalogueResourceCollection(Catalogue::paginate()))->response()->setStatusCode(200);
     }
 
     public function show($id)
     {
         $catalogue = Catalogue::find($id);
+
+        $this->authorize('view', $catalogue);
 
         if (is_null($catalogue)) {
             return response()->json([
@@ -33,6 +37,8 @@ class CatalogueController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Catalogue::class);
+
         $input = $request->all();
 
         $validator = Validator::make($input, [
@@ -76,6 +82,8 @@ class CatalogueController extends Controller
 
         $catalogue = Catalogue::find($id);
 
+        $this->authorize('update', $catalogue);
+
         if (is_null($catalogue)) {
             return response()->json([
                 'success' => 'false',
@@ -92,6 +100,8 @@ class CatalogueController extends Controller
     public function destroy($id)
     {
         $catalogue = Catalogue::find($id);
+
+        $this->authorize('delete', $catalogue);
 
         if (is_null($catalogue)) {
             return response()->json([

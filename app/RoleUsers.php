@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class RoleUsers extends Model
+class RoleUsers extends Pivot
 {
     public $incrementing = false;
 

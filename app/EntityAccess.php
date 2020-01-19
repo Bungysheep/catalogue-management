@@ -28,9 +28,15 @@ class EntityAccess extends Model
     public function roles()
     {
         return $this->belongsToMany('App\Role', 'role_access', 'role_code', 'entity_key')
+            ->using('App\RoleAccess')
             ->withPivot([
                 'override_access'
             ])
             ->as('role_access');
+    }
+
+    public function hasAccessTo($accessName) : bool
+    {
+        return $this->default_access[$accessName] ?? false;
     }
 }

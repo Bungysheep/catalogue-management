@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class RoleAccess extends Model
+class RoleAccess extends Pivot
 {
     public $incrementing = false;
 
@@ -21,4 +21,14 @@ class RoleAccess extends Model
         'entity_key' => 'string',
         'override_access' => 'array'
     ];
+
+    public function hasAccessTo($accessName)
+    {
+        if (array_key_exists($accessName, $this->override_access))
+        {
+            return $this->override_access[$accessName];
+        }
+
+        return null;
+    }
 }
