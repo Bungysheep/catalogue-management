@@ -31,6 +31,13 @@ class CatalogueController extends Controller
     {
         $catalogue = Catalogue::find($id);
 
+        if (is_null($catalogue)) {
+            return response()->json([
+                'success' => 'false',
+                'message' => 'Catalogue does not exist.'
+            ], 404);
+        }
+
         $authResp = Gate::inspect('view', $catalogue);
         if (!$authResp->allowed())
         {
@@ -38,13 +45,6 @@ class CatalogueController extends Controller
                 'success' => 'false',
                 'message' => $authResp->message(),
             ], 403);
-        }
-
-        if (is_null($catalogue)) {
-            return response()->json([
-                'success' => 'false',
-                'message' => 'Catalogue does not exist.'
-            ], 404);
         }
 
         return (new CatalogueResource($catalogue))->response()->setStatusCode(200);
@@ -104,6 +104,13 @@ class CatalogueController extends Controller
 
         $catalogue = Catalogue::find($id);
 
+        if (is_null($catalogue)) {
+            return response()->json([
+                'success' => 'false',
+                'message' => 'Catalogue does not exist.'
+            ], 404);
+        }
+
         $authResp = Gate::inspect('update', $catalogue);
         if (!$authResp->allowed())
         {
@@ -111,13 +118,6 @@ class CatalogueController extends Controller
                 'success' => 'false',
                 'message' => $authResp->message(),
             ], 403);
-        }
-
-        if (is_null($catalogue)) {
-            return response()->json([
-                'success' => 'false',
-                'message' => 'Catalogue does not exist.'
-            ], 404);
         }
 
         $input['catalogue_code'] = $id;
@@ -130,6 +130,13 @@ class CatalogueController extends Controller
     {
         $catalogue = Catalogue::find($id);
 
+        if (is_null($catalogue)) {
+            return response()->json([
+                'success' => 'false',
+                'message' => 'Catalogue does not exist.'
+            ], 404);
+        }
+
         $authResp = Gate::inspect('delete', $catalogue);
         if (!$authResp->allowed())
         {
@@ -137,13 +144,6 @@ class CatalogueController extends Controller
                 'success' => 'false',
                 'message' => $authResp->message(),
             ], 403);
-        }
-
-        if (is_null($catalogue)) {
-            return response()->json([
-                'success' => 'false',
-                'message' => 'Catalogue does not exist.'
-            ], 404);
         }
 
         $catalogue->delete();

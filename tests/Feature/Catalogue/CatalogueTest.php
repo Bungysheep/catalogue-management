@@ -51,7 +51,7 @@ class CatalogueTest extends TestCase
     public function testGetAllCatalogues()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [];
         $this->json('get', '/api/catalogues', $payload, $header)
@@ -73,7 +73,7 @@ class CatalogueTest extends TestCase
     public function testGetCatalogue()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [];
         $this->json('get', '/api/catalogues/$DEFAULT', $payload, $header)
@@ -93,7 +93,7 @@ class CatalogueTest extends TestCase
     public function testGetInvalidCatalogue()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [];
         $this->json('get', '/api/catalogues/DEFAULT', $payload, $header)
@@ -107,7 +107,7 @@ class CatalogueTest extends TestCase
     public function testCreateCatalogueWithoutRequiredFields()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [];
         $this->json('post', '/api/catalogues', $payload, $header)
@@ -128,7 +128,7 @@ class CatalogueTest extends TestCase
     public function testCreateCatalogueWithoutUniqueId()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [
             'catalogue_code' => '$DEFAULT',
@@ -148,7 +148,7 @@ class CatalogueTest extends TestCase
     public function testCreateCatalogueWithInvalidStatus()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [
             'catalogue_code' => 'CLG',
@@ -168,7 +168,7 @@ class CatalogueTest extends TestCase
     public function testCreateCatalogue()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [
             'catalogue_code' => 'CLG',
@@ -193,7 +193,7 @@ class CatalogueTest extends TestCase
     public function testUpdateCatalogueWithoutRequiredFields()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [];
         $this->json('put', '/api/catalogues/$DEFAULT', $payload, $header)
@@ -214,7 +214,7 @@ class CatalogueTest extends TestCase
     public function testUpdateCatalogueWithInvalidStatus()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [
             'catalogue_code' => '$DEFAULT',
@@ -234,7 +234,7 @@ class CatalogueTest extends TestCase
     public function testUpdateCatalogueWithInvalidId()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [
             'catalogue_code' => 'DEFAULT',
@@ -253,7 +253,7 @@ class CatalogueTest extends TestCase
     public function testUpdateCatalogue()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [
             'catalogue_code' => '$DEFAULT',
@@ -278,7 +278,7 @@ class CatalogueTest extends TestCase
     public function testDeleteCatalogueWithInvalidId()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [];
         $this->json('delete', '/api/catalogues/DEFAULT', $payload, $header)
@@ -292,7 +292,7 @@ class CatalogueTest extends TestCase
     public function testDeleteCatalogue()
     {
         $header = [
-            'Authorization' => "Bearer $this->access_token",
+            'Authorization' => "Bearer $this->admin_access_token",
         ];
         $payload = [];
         $this->json('delete', '/api/catalogues/$DEFAULT', $payload, $header)
