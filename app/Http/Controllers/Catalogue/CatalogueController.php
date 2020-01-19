@@ -9,12 +9,20 @@ use App\Http\Resources\Catalogue\CatalogueResource;
 use App\Http\Resources\Catalogue\CatalogueResourceCollection;
 use Illuminate\Validation\Rule;
 use Validator;
+use Illuminate\Support\Facades\Gate;
 
 class CatalogueController extends Controller
 {
     public function index()
     {
-        $this->authorize('viewAny', Catalogue::class);
+        $authResp = Gate::inspect('viewAny', Catalogue::class);
+        if (!$authResp->allowed())
+        {
+            return response()->json([
+                'success' => 'false',
+                'message' => $authResp->message(),
+            ], 403);
+        }
 
         return (new CatalogueResourceCollection(Catalogue::paginate()))->response()->setStatusCode(200);
     }
@@ -23,7 +31,14 @@ class CatalogueController extends Controller
     {
         $catalogue = Catalogue::find($id);
 
-        $this->authorize('view', $catalogue);
+        $authResp = Gate::inspect('view', $catalogue);
+        if (!$authResp->allowed())
+        {
+            return response()->json([
+                'success' => 'false',
+                'message' => $authResp->message(),
+            ], 403);
+        }
 
         if (is_null($catalogue)) {
             return response()->json([
@@ -37,7 +52,14 @@ class CatalogueController extends Controller
 
     public function store(Request $request)
     {
-        $this->authorize('create', Catalogue::class);
+        $authResp = Gate::inspect('create', Catalogue::class);
+        if (!$authResp->allowed())
+        {
+            return response()->json([
+                'success' => 'false',
+                'message' => $authResp->message(),
+            ], 403);
+        }
 
         $input = $request->all();
 
@@ -82,7 +104,14 @@ class CatalogueController extends Controller
 
         $catalogue = Catalogue::find($id);
 
-        $this->authorize('update', $catalogue);
+        $authResp = Gate::inspect('update', $catalogue);
+        if (!$authResp->allowed())
+        {
+            return response()->json([
+                'success' => 'false',
+                'message' => $authResp->message(),
+            ], 403);
+        }
 
         if (is_null($catalogue)) {
             return response()->json([
@@ -101,7 +130,14 @@ class CatalogueController extends Controller
     {
         $catalogue = Catalogue::find($id);
 
-        $this->authorize('delete', $catalogue);
+        $authResp = Gate::inspect('delete', $catalogue);
+        if (!$authResp->allowed())
+        {
+            return response()->json([
+                'success' => 'false',
+                'message' => $authResp->message(),
+            ], 403);
+        }
 
         if (is_null($catalogue)) {
             return response()->json([

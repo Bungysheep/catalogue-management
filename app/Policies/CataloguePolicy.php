@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Catalogue;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class CataloguePolicy
 {
@@ -18,7 +19,9 @@ class CataloguePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'read');
+        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'read')
+            ? Response::allow()
+            : Response::deny('You do not have access to retrieve Catalogues.');
     }
 
     /**
@@ -30,7 +33,9 @@ class CataloguePolicy
      */
     public function view(User $user, Catalogue $catalogue)
     {
-        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'read');
+        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'read')
+            ? Response::allow()
+            : Response::deny('You do not have access to retrieve a Catalogue.');
     }
 
     /**
@@ -41,7 +46,9 @@ class CataloguePolicy
      */
     public function create(User $user)
     {
-        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'create');
+        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'create')
+            ? Response::allow()
+            : Response::deny('You do not have access to create a Catalogue.');
     }
 
     /**
@@ -53,7 +60,9 @@ class CataloguePolicy
      */
     public function update(User $user, Catalogue $catalogue)
     {
-        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'update');
+        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'update')
+            ? Response::allow()
+            : Response::deny('You do not have access to update a Catalogue.');
     }
 
     /**
@@ -65,7 +74,9 @@ class CataloguePolicy
      */
     public function delete(User $user, Catalogue $catalogue)
     {
-        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'delete');
+        return $user->roles()->get()[0]->hasAccess('CATALOGUE', 'delete')
+            ? Response::allow()
+            : Response::deny('You do not have access to delete a Catalogue.');
     }
 
     /**
