@@ -12,6 +12,11 @@ class CataloguesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Catalogue::class)->create();
+        Catalogue::create([
+            'catalogue_code' => '$DEFAULT',
+            'description' => 'Default Catalogue',
+            'details' => 'Default Catalogue',
+            'status' => 'A'
+        ]);
     }
 }

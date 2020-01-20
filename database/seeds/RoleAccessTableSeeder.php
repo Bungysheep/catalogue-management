@@ -25,7 +25,8 @@ class RoleAccessTableSeeder extends Seeder
 
         RoleAccess::create([
             'role_code' => 'OFFICER',
-            'entity_key' => 'CATALOGUE'
+            'entity_key' => 'CATALOGUE',
+            'override_access' => []
         ]);
     }
 }
